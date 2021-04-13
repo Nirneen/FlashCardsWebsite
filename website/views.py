@@ -16,10 +16,11 @@ def home():
         if len(input_collection) >= 1:
             new_collection = Collection(user_id=current_user.id, collection_name=input_collection)
             db.session.add(new_collection)
-            print(new_collection)
+            print(new_collection.collection_name)
             db.session.commit()
             
             flash('Collection Added', category='success')
+
         else:
             flash('Name is too short', category='error')
         
@@ -29,3 +30,8 @@ def home():
 @views.route('/', methods=['GET', 'POST'])
 def started_page():
     return render_template('started_page.html', user=None)
+
+@views.route('/collectoin', methods=['GET', 'POST'])
+@login_required
+def Collection():
+    pass
