@@ -8,18 +8,20 @@ class User(db.Model, UserMixin):
 	email = db.Column(db.String(150), unique=True)
 	password = db.Column(db.String(150))
 	first_name = db.Column(db.String(150))
+	collections = db.relationship('Collection', lazy='dynamic')
 
 
 class Collection(db.Model):
-	__tablename__ = 
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))#class User with lower case 
+	collection_name = db.Column(db.String(64))
+	#cards = db.relationship('Card', lazy='dynamic')
 
 	
-
+'''
 class Card(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
-	front_side = db.Collumn(db.String(256))
-	back_side = db.Collumn(db.String(256))
+	front_side = db.Column(db.String(256))
+	back_side = db.Column(db.String(256))
+'''
