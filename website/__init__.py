@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User, Collection #add Card
+    from .models import User, Collection, Card
 
     create_database(app)
 

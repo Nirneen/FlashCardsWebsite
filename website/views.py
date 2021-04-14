@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from . import db
-from .models import Collection #add Card
+from .models import Collection, Card #add Card
 import json 
 
 
@@ -31,7 +31,15 @@ def home():
 def started_page():
     return render_template('started_page.html', user=None)
 
-@views.route('/collectoin', methods=['GET', 'POST'])
+@views.route('/collection/<int:id>', methods=['GET', 'POST'])
 @login_required
-def Collection():
-    pass
+def get_all_collection(id):#/blog/<int:id>
+    collections= Collection.query.filter_by(user_id=current_user.id).all()
+
+    try:
+        serialized_collection = collections[id-1].serialize
+
+        return jsonify({"single_collection": serialized_collection}) 
+    except Exception as e:#add draw
+        print(e)
+    
