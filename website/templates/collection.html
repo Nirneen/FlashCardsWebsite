@@ -3,10 +3,82 @@
 
 {% block content %}
 
-<ul class="list-group list-group-flush" id="collection_name">
-	{% for collection in user.collections %}
-	<li class="list-group-item">{{ collection.collection_name }}</li>
+<h1 align="center">Your Collection</h1>
+<ul class="list-group list-group-flush" id="front_side">
+	{% for card in collection.cards %}
+	<ul class="list-group list-group-horizontal">
+	<li class="list-group-item">{{ card.front_side }}</li>
+	<li class="list-group-item">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalBackSide">
+    	View a Back Side
+    </button>
+    <!-- Modal -->
+      <div class="modal fade" id="ModalBackSide" tabindex="-1" role="dialog" aria-labelledby="ModalBackSide" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalBackSide">Add New Card</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>{{ card.back_side }}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+	</ul>
 	{% endfor %}
 </ul>
+
+
+
+
+
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAddCard">
+	Add New Card
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalAddCard" tabindex="-1" role="dialog" aria-labelledby="ModalAddCard" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalAddCard">Add New Card</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+        <div class="modal-body">
+          <input 
+              type="new_card_front_side" 
+              class="form-contol" 
+              id="new_card_front_side" 
+              name="new_card_front_side" 
+              placeholder="front side"
+              />
+			<input 
+              type="new_card_back_side" 
+              class="form-contol" 
+              id="new_card_back_side" 
+              name="new_card_back_side" 
+              placeholder="back side"
+              />
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

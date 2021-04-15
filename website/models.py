@@ -32,3 +32,13 @@ class Card(db.Model):
 	collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
 	front_side = db.Column(db.String(256))
 	back_side = db.Column(db.String(256))
+
+
+	@property
+	def serialize(self):
+		return {
+			'id': self.id,
+			'collection_id': self.collection_id,
+			'front_side': self.front_side,
+			'back_side': self.back_side,
+		}

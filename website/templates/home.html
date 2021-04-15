@@ -5,7 +5,7 @@
 <h1 align="center">Your Collections</h1>
 <ul class="list-group list-group-flush" id="collection_name">
 	{% for collection in user.collections %}
-	<li class="list-group-item">{{ collection.collection_name }}</li>
+	<a class="text" href="/collection/{{collection.id}}">{{ collection.collection_name }}</a>
 	{% endfor %}
 </ul>
 

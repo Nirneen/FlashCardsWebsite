@@ -16,7 +16,6 @@ def home():
         if len(input_collection) >= 1:
             new_collection = Collection(user_id=current_user.id, collection_name=input_collection)
             db.session.add(new_collection)
-            print(new_collection.collection_name)
             db.session.commit()
             
             flash('Collection Added', category='success')
@@ -33,13 +32,19 @@ def started_page():
 
 @views.route('/collection/<int:id>', methods=['GET', 'POST'])
 @login_required
-def get_all_collection(id):#/blog/<int:id>
-    collections= Collection.query.filter_by(user_id=current_user.id).all()
+def collection(id):#/blog/<int:id>
+    collection= Collection.query.filter_by(id=id).first_or_404()
+    #serialized_collection = collection.serialize
+    if request.method == 'POST':
+        input_front_side = request.form.get('new_card_front_side')
+        input_back_side = request.form.get('new_card_back_side')
 
-    try:
-        serialized_collection = collections[id-1].serialize
+        if (len(input_front_side) + len(input_back_side)) > 1:
+            new_card = Card(collection_id=id, front_side=input_front_side, back_side=input_back_side)
+            db.session.add(new_card)
+            print(new_card.back_side)
+            db.session.commit()
 
-        return jsonify({"single_collection": serialized_collection}) 
-    except Exception as e:#add draw
-        print(e)
+
+    return render_template('collection.html', user=current_user, collection=collection) 
     
